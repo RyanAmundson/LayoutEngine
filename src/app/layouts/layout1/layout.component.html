@@ -1,0 +1,93 @@
+<div aa-layout  #layoutContainer>
+        <!-- top -->
+        <div aa-navbar *ngIf="state?.indexOf('nb') !== -1"  #nbContainer>
+                <ng-content *ngTemplateOutlet="navbar" select="[name=navbar]">
+                </ng-content>
+        </div>
+
+        <div aa-quicknav *ngIf="state?.indexOf('qn') !== -1" #qnContainer>
+                <ng-content *ngTemplateOutlet="quickNav" select="[name=quicknav]"></ng-content>
+        </div>
+
+        <!-- left -->
+        <div aa-lsm *ngIf="state?.indexOf('lsm') !== -1"  #lsmContainer>
+                <ng-container *ngIf="!mobile">
+                        <ng-content *ngTemplateOutlet="leftSideMenu" select="[name=leftsidemenu]"></ng-content>
+                </ng-container>
+        </div>
+
+        <div aa-lsmf *ngIf="state?.indexOf('lsmf') !== -1"  #lsmfContainer>
+                <ng-container *ngIf="!mobile">
+                        <ng-content *ngTemplateOutlet="leftSideMenuFull" select="[name=leftsidemenufull]"></ng-content>
+                </ng-container>
+        </div>
+
+        <div aa-lom *ngIf="state?.indexOf('lom') !== -1" (click)="outsideClick('lom',$event)">
+                <div aa-lom-content (click)="insideClick('lom',$event)" #lomContainer>
+                        <ng-container>
+                                <ng-content #lom *ngTemplateOutlet="leftOverlayMenu" select="[name=leftoverlaymenu]"></ng-content>
+                        </ng-container>
+                        <ng-container *ngIf="mobile">
+                                <ng-content *ngTemplateOutlet="leftSideMenuFull" select="[name=leftsidemenufull]"></ng-content>
+                        </ng-container>
+                        <ng-container *ngIf="mobile">
+                                <ng-content *ngTemplateOutlet="leftSideMenu" select="[name=leftsidemenu]"></ng-content>
+                        </ng-container>
+                </div>
+        </div>
+
+        <!-- center -->
+        <div aa-mc id="mc" #mcContainer>
+                <ng-content *ngTemplateOutlet="mainContent" select="[name=maincontent]"></ng-content>
+        </div>
+
+        <div aa-modal (click)="outsideClick('modal',$event)" *ngIf="state?.indexOf('modal') !== -1">
+                <div aa-modal-box (click)="insideClick('modal',$event)" #modalContainer>
+                        <ng-content *ngTemplateOutlet="modal" select="[name=modal]"></ng-content>
+                </div>
+        </div>
+
+        <!-- right -->
+        <div aa-rsm *ngIf="state?.indexOf('rsm') !== -1" #rsmContainer>
+                <ng-container *ngIf="!mobile">
+                        <ng-content *ngTemplateOutlet="rightSideMenu" select="[name=rightsidemenu]"></ng-content>
+                </ng-container>
+        </div>
+
+        <div aa-rom *ngIf="state?.indexOf('rom') !== -1" (click)="outsideClick('rom',$event)">
+                <div aa-rom-content (click)="insideClick('rom',$event)" #romContainer>
+                        <ng-container>
+                                <ng-content *ngTemplateOutlet="rightOverlayMenu" select="[name=rightoverlaymenu]"></ng-content>
+                        </ng-container>
+
+                        <ng-container *ngIf="mobile">
+                                <ng-content *ngTemplateOutlet="rightSideMenuFull" select="[name=rightSideMenuFull]"></ng-content>
+                        </ng-container>
+
+                        <ng-container *ngIf="mobile">
+                                <ng-content *ngTemplateOutlet="rightSideMenu" select="[name=rightsidemenu]"></ng-content>
+                        </ng-container>
+                </div>
+        </div>
+
+        <div aa-rsmf *ngIf="state?.indexOf('rsmf') !== -1" #rsmfContainer>
+                <ng-container *ngIf="!mobile">
+                        <ng-content *ngTemplateOutlet="rightSideMenuFull" select="[name=rightSideMenuFull]"></ng-content>
+                </ng-container>
+        </div>
+
+        <!-- bottom -->
+
+        <!-- fixed -->
+        <div aa-overlay *ngIf="state?.indexOf('overlay') !== -1" #overlayContainer>
+                <button (click)="toggleMenu('overlay')" class="close-overlay">x</button>
+                <ng-content *ngTemplateOutlet="overlay" select="[name=overlay]"></ng-content>
+        </div>
+
+        <div aa-alerts-container *ngIf="state?.indexOf('alerts') !== -1">
+                <ng-container #alertsContainer>
+                </ng-container>
+        </div>
+
+
+</div>

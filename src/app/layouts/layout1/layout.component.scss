@@ -1,0 +1,272 @@
+
+@import 'basic-theme';
+
+[aa-layout]{
+    // if parent has grid cell called layout
+    -ms-grid-row:1;
+    -ms-grid-column:1;
+    grid-area:layout;
+
+    display:-ms-grid;
+    display:grid;
+
+    grid-template: 
+    "lsmf nb nb nb rsmf"
+    "lsmf qn qn qn rsmf"
+    "lsmf lsm mc rsm rsmf";
+
+    grid-template-areas: 
+    "lsmf nb nb nb rsmf"
+    "lsmf qn qn qn rsmf"
+    "lsmf lsm mc rsm rsmf";
+    grid-template-columns: min-content min-content 1fr min-content min-content;
+    grid-template-rows: min-content min-content 1fr;
+    
+    -ms-grid-columns: min-content min-content 1fr min-content min-content;
+    -ms-grid-rows: min-content min-content 1fr;
+    -ms-grid-column-align:stretch;
+    -ms-grid-row-align:stretch;
+    
+    justify-content: stretch;
+    align-items: stretch;
+    justify-self: stretch;
+    align-self: stretch;
+    overflow:hidden;
+    
+    height:100%;
+    width:100%;
+    // @include z-index(1);
+    
+    [aa-quicknav]{
+        grid-area: qn;
+
+        -ms-grid-column: 2;
+        -ms-grid-column-span:3;
+        -ms-grid-row: 2;
+
+        // @include z-index(1);
+    }
+
+    [aa-navbar]{
+        grid-area: nb;
+        grid-column-start: 2;
+        grid-column-end: span 3;
+        grid-row-start: 1;
+        grid-row-end:  1;
+
+        -ms-grid-column: 2;
+        -ms-grid-row: 1;
+        -ms-grid-column-span:3;
+
+        display:flex;
+        flex: 1 1 100%;
+        // @include z-index(1);
+        
+        .menu-toggle{
+            display:flex;
+            background:rgba(0, 0, 0, 0.1);
+            color:rgba(97, 91, 91, 0.568);
+            align-items:center;
+            justify-content: center;
+            // @include z-index(1);
+
+            padding:5px;
+            &:hover{
+                background:black;
+                color:white;
+            }
+    
+        }
+    }
+
+    [aa-lsm]{
+        position:relative;
+        grid-area: lsm;
+        -ms-grid-column: 2;
+        -ms-grid-row: 3;
+
+        overflow-y:auto;
+        // @include z-index(1);
+    }
+
+    [aa-lsmf]{
+        grid-area: lsmf;
+        position:relative;
+        justify-content:stretch;
+        align-content:stretch;
+        overflow-y:auto;
+        -ms-grid-column: 1;
+        -ms-grid-row: 1;
+        -ms-grid-row-span:3;
+
+        // @include z-index(1);
+        
+    }
+
+    [aa-lom] {
+        display:grid;
+        grid-column-start: 1;
+        grid-column-end: span 4;
+        grid-row-start: 1;
+        grid-row-end: span 3;
+
+        justify-items:start;
+        align-items: stretch;
+
+        background-color:black;
+        background: rgba(0, 0, 0, 0.3);
+        @include z-index(3);
+        [aa-lom-content]{ //doesnt scroll well
+            display:grid;
+            overflow-y:auto;
+            overflow-x:hidden;
+            @include z-index(4);
+
+        }
+    }
+
+    [aa-rom]{ //doesnt scroll well
+        display:grid;
+        // display: -ms-grid;
+
+        grid-column-start: 1;
+        grid-column-end: span 4;
+        grid-row-start: 1;
+        grid-row-end: span 3;
+
+        -ms-grid-column: 1;
+        -ms-grid-column-span: 4;
+        -ms-grid-row: 1;
+        -ms-grid-row-span:3;
+
+        justify-items:end;
+        align-items: stretch;
+        
+        background-color:black;
+        background: rgba(0, 0, 0, 0.3);
+        @include z-index(4);
+
+        //for ie 11
+        -ms-grid-row-align:end;
+        -ms-grid-column-align:end;
+        //end for ie 11
+
+        [aa-rom-content]{
+            display:grid;
+            // display: -ms-grid;
+
+            overflow-y:auto;
+            overflow-x:hidden;
+            @include z-index(4);
+
+            //for ie 11
+            -ms-grid-column: 4;
+            -ms-grid-column-span: 1;
+            -ms-grid-row: 1;
+            -ms-grid-row-span:3;
+            -ms-grid-row-align:stretch;
+            -ms-grid-column-align:stretch;
+            //end for ie 11
+        }
+
+    }
+
+    [aa-mc]{
+        grid-area: mc;
+        -ms-grid-column: 3;
+        -ms-grid-row: 3;
+
+        overflow-y:auto;
+        overflow-x:hidden;
+
+    }
+
+    [aa-modal] {
+        position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+        width:100vw;
+        background-color:black;
+        background: rgba(0, 0, 0, 0.3);
+        @include z-index(3);
+
+        [aa-modal-box]{
+            display:flex;
+            transform: translateY(-100%);
+            background: transparent;
+            @include z-index(4);
+        }
+        
+    }
+
+    [aa-rsm]{
+        grid-area: rsm;
+        -ms-grid-column: 4;
+        -ms-grid-row: 3;
+        position:relative;
+        justify-content:stretch;
+        align-content:stretch;
+        overflow-y:auto;
+
+        // @include z-index(1);
+
+    }
+
+    [aa-rsmf]{
+        grid-area: rsmf;
+
+        -ms-grid-column: 5;
+        -ms-grid-column-span: 1;
+        -ms-grid-row: 1;
+        -ms-grid-row-span:3;
+
+        position:relative;
+        justify-content:stretch;
+        align-content:stretch;
+        overflow-y:auto;
+
+        // @include z-index(1);
+
+    }
+
+    [aa-overlay]{//this has to be fixed for nested layouts
+        position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        display:flex;
+        height:100vh;
+        width:100vw;
+        @include z-index(4);
+        .close-overlay{
+            position:fixed;
+            top:10px;
+            right:10px;
+            width:25px;
+            height:25px;
+        }
+    }
+
+    [aa-alerts-container]{
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        position:fixed;
+        left:50%;
+        right:50%;
+        top:100px;
+        display:flex;
+        @include z-index(5);
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: flex-end;      
+    }
+
+}
+

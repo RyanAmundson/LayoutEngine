@@ -1,0 +1,161 @@
+@import './_layout-theme.scss';
+
+
+
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) { 
+
+
+    [aa-layout]{
+        // if parent has grid cell called layout
+        -ms-grid-row:1;
+        -ms-grid-column:1;
+        grid-area:layout;
+    
+        display:-ms-grid;
+        display:grid;
+    
+        grid-template: 
+        "lsmf nb nb nb"
+        "lsmf qn qn qn"
+        "lsmf lsm mc rsm";
+    
+        grid-template-areas: 
+        "lsmf nb nb nb"
+        "lsmf qn qn qn"
+        "lsmf lsm mc rsm";
+        grid-template-columns: min-content min-content 1fr min-content;
+        grid-template-rows: min-content min-content 1fr;
+        
+        -ms-grid-columns: min-content min-content 1fr min-content;
+        -ms-grid-rows: min-content min-content 1fr;
+        -ms-grid-column-align:stretch;
+        -ms-grid-row-align:stretch;
+        
+        justify-content: stretch;
+        align-items: stretch;
+        justify-self: stretch;
+        align-self: stretch;
+        overflow:visible;
+        
+        height:100%;
+        width:100%;
+        
+        [aa-quicknav]{
+            grid-area: qn;
+    
+            -ms-grid-column: 2;
+            -ms-grid-column-span:3;
+            -ms-grid-row: 2;
+    
+            justify-self: stretch;
+            align-self: stretch;
+            justify-content:stretch;
+            align-content:stretch;
+            // border-bottom:1px solid black;
+            // outline:1px solid get-theme(secondary-color);
+        }
+    
+        [aa-navbar]{
+            grid-area: nb;
+    
+            -ms-grid-column: 2;
+            -ms-grid-row: 1;
+            -ms-grid-column-span:3;
+    
+            // background-color:red;
+            // opacity:0.7;
+            width:100%;
+            // outline:1px solid get-theme(secondary-color);
+        }
+    
+        [aa-lsm]{
+            position:relative;
+            grid-area: lsm;
+            -ms-grid-column: 2;
+            -ms-grid-row: 3;
+            // justify-content:stretch;
+            // align-content:stretch;
+            overflow-y:auto;
+            // outline:1px solid get-theme(secondary-color);
+            // background-color:theme(background-color);
+            // justify-self: stretch;
+            // align-self: stretch;
+            // padding-right:15px;
+            // background-color:blue;
+            // opacity:0.7;
+            // border-right:1px solid get-theme(primary-color);
+            // box-shadow: 3px 0px 8px 3px rgba(0, 0, 0, .2);
+            // max-height:100vh;
+            // overflow-x:visible;//causes right box-shadow to dissappear
+    
+    
+        }
+    
+        [aa-lsmf]{
+            grid-area: lsmf;
+            position:relative;
+            justify-content:stretch;
+            align-content:stretch;
+            overflow-y:auto;
+            -ms-grid-column: 1;
+            -ms-grid-row: 1;
+            -ms-grid-row-span:3;
+            // outline:1px solid get-theme(secondary-color);
+            // background-color:theme(background-color);
+            // justify-self: stretch;
+            // align-self: stretch;
+            // padding-right:15px;
+            // background-color:blue;
+            // opacity:0.7;
+            // border-right:1px solid get-theme(primary-color);
+            // box-shadow: 3px 0px 8px 3px rgba(0, 0, 0, .2);
+            // max-height:100vh;
+            // overflow-x:visible;//causes right box-shadow to dissappear
+            
+        }
+    
+        [aa-lom]{ //doesnt scroll well
+            position:fixed;
+            height:100%;
+            overflow:auto;
+    
+            @include z-index(3);
+        }
+        [aa-rom]{ //doesnt scroll well
+            position:fixed;
+            right:0;
+            height:100%;
+            overflow:auto;
+    
+            @include z-index(3);
+        }
+        [aa-mc]{
+            grid-area: mc;
+            -ms-grid-column: 3;
+            -ms-grid-row: 3;
+    
+            overflow-y:auto;
+            overflow-x:hidden;
+    
+        }
+        [aa-rsm]{
+            grid-area: rsm;
+            -ms-grid-column: 4;
+            -ms-grid-row: 3;
+            position:relative;
+            justify-content:stretch;
+            align-content:stretch;
+            overflow-y:auto;
+            overflow-x:hidden;
+            // background-color:purple;
+            // opacity:0.7;
+            // outline:1px solid get-theme(secondary-color);
+    
+        }
+    
+    }
+    
+    
+  }

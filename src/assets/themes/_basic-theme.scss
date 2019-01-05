@@ -1,0 +1,284 @@
+@import '_extendable.scss';
+
+
+$colors: (
+    primary-color: #014b75,
+    secondary-color: #2189ca,
+    success-color: #008000,
+    warning-color:#bcbe14,
+    danger-color:#ff0000,
+    cancel-color:#808080, 
+    aa-yellow: #f8b400, 
+    aa-primary-color:#7895a9
+);
+
+$background-colors: (
+    background-color:#ffffff,
+    primary-bg-color: #808080,
+    secondary-bg-color:#e2e0e0,
+    accent-bg-color:rgb(221, 236, 246)
+);
+
+$border-radius: (
+    border-radius: 4px,
+    chip-border-radius: 25px,
+);
+
+$font-colors: (
+    color: #000000,
+    color-inverse: #ffffff,
+    font-color: #000000,
+    primary-font-color: #000000,
+);
+
+$font-sizes: (
+    font-size: 1rem,
+    font-size-tiny: 0.3rem,
+    font-size-small: 0.5rem,
+    font-size-medium: 1rem,
+    font-size-large: 3rem,
+);
+
+$font-weights: (
+    font-weight: 400,
+    font-weight-1: 500,
+    font-weight-2: 600,
+    font-weight-3: 700,
+    font-weight-4: 800,
+);
+
+$font-families: (
+    font-family:monospace,
+);
+
+$padding: (
+    padding:15px,
+    no-padding:0px,
+    default-padding:15px,
+    extra-padding: 30px
+);
+
+$margin: (
+    margin:15px,
+    no-margin:0px,
+    default-margin:15px,
+    extra-margin: 30px
+);
+
+$borders: (
+    border: 1px solid black,
+    border-2: 1px solid white,
+    border-3: 1px solid darken(rgb(221, 236, 246),10%),
+);
+
+$outlines: (
+    outline:1px solid black,
+);
+
+$box-shadows: (
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.16)
+);
+
+$line-heights: (
+    line-height: 1,
+);
+
+$letter-spacing: (
+    letter-spacing: 1,
+);
+
+$z-index: (
+    alert: 6,
+    modal: 5,
+    flyout: 4,
+    navbar: 3,
+    content: 2,
+    container: 1
+);
+
+
+@function basic-theme() {
+    $returnValue: map-merge($colors,$padding);
+    $returnValue: map-merge($returnValue,$margin);
+    $returnValue: map-merge($returnValue,$font-sizes);
+    $returnValue: map-merge($returnValue,$font-weights);
+    $returnValue: map-merge($returnValue,$background-colors);
+    $returnValue: map-merge($returnValue,$font-colors);
+    $returnValue: map-merge($returnValue,$borders);
+    $returnValue: map-merge($returnValue,$outlines);
+    $returnValue: map-merge($returnValue,$border-radius);
+    $returnValue: map-merge($returnValue,$box-shadows);
+    $returnValue: map-merge($returnValue,$line-heights);
+    $returnValue: map-merge($returnValue,$letter-spacing);
+    $returnValue: map-merge($returnValue,$font-families);
+    @return $returnValue;
+}
+
+$theme: basic-theme();
+
+@function theme($mapKey, $scale: 1){
+    $value: map-get($theme,$mapKey);
+    @if(type_of($value) ==  'number') {
+        @return $value * $scale;
+    }
+    @return $value;
+}
+@function get-theme($mapKey, $scale: 1){
+    @return theme($mapKey, $scale: 1);
+}
+
+@function theme-or-default($key,$default,$scale: 1){
+    @if map-has-key($theme, $key){
+        @return get-theme($key, $scale);
+    }
+    @else {
+        @warn "No theme, using default";
+    }
+    @return $default * $scale;
+}
+
+@function themeOrDefault($key, $default, $scale){
+    @return theme-or-default($key, $default ,$scale);
+}
+
+//general mixins
+@mixin linear-gradient($direction, $color-stops...) {
+    background: nth(nth($color-stops, 1), 1);
+    background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+    background: linear-gradient($direction, $color-stops);
+  }
+
+@mixin z-index($number, $color:rgba(0,0,0,0.24), $shadow: false){
+  
+    z-index:$number;
+    @if $number == 1 {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    @if $number == 2 {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    @if $number == 3 {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    @if $number == 4 {
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+    @if $number == 5 {
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    } 
+
+    @if not $shadow {
+        box-shadow: none;
+    }
+}
+
+@mixin flex($direction, $justify-content, $align-items, $flex: 1 1 100%) {
+    display:flex;
+    flex-direction:$direction;
+    justify-content: $justify-content;
+    align-items:$align-items;
+    flex:$flex;
+}
+//theme mixin
+
+@mixin header($z-index: 1, $font-size:(theme(font-size-large)/1.5),$font-color:theme(primary-color)) {
+    //@include z-index($z-index,theme(primary-color));
+    @include flex(row,space-evenly,stretch, 1 1 100%);
+
+    padding:get-theme(padding, 1.5);
+    padding-top:get-theme(padding, 0.5);
+    padding-bottom:get-theme(padding, 0.5);
+
+    .menu-toggle{
+        display:flex;
+        align-self:center;
+        justify-self:center;
+    }
+    
+    .title{
+        font-size:theme(font-size,2);
+        color:theme(primary-color);
+        // padding:theme(default-padding);
+        flex: 1 1 100%;
+        justify-self:flex-start;
+        display:flex;
+        flex-direction: column;
+        .sub-title{
+            font-size:theme(font-size,0.8);
+        }
+    }
+    h1{
+        flex: 1 1 100%;
+        justify-self:flex-start;
+    }
+    //outline:1px solid theme(primary-color);       
+}
+
+@mixin button($font-color,$background-color,$border-color) {
+    font-size:theme(font-size);
+    font-weight:theme(font-weight);
+    border-radius:theme(border-radius);
+    box-shadow: theme(box-shadow);
+    border:theme(border);
+
+    color:$font-color;
+    background-color:$background-color;
+    border-color:$border-color;
+    &:hover {
+        background-color:darken($background-color, 15%);
+    }
+    &:focus{
+        background-color:darken($background-color, 5%);
+    }
+}
+
+
+//global styling
+@mixin basic-theme {
+    .header{
+        @include header;
+    }
+
+    .btn {
+        transform: all 0.3s ease;
+        
+        &.btn-xs{
+            padding: 0.35rem 0.625rem 0.35rem 0.625rem;
+        }
+        &.btn-sm{
+            padding: 0.5rem 0.625rem 0.5rem 0.625rem;
+        }  
+        &.btn-md{
+            padding: 0.625rem 1.25rem 0.625rem 1.25rem;
+        } 
+        &.btn-lg{
+            padding: 0.625rem 3.75rem 0.625rem 3.75rem;
+        }
+
+        &.btn-default {
+            @include button(theme(color-inverse), theme(secondary-color), lighten(theme(secondary-color),10%));
+        }
+        &.btn-primary {
+            @include button(theme(color-inverse), theme(primary-color), lighten(theme(primary-color),10%));
+        }
+        &.btn-success {
+            @include button(theme(color-inverse), theme(success-color), lighten(theme(success-color),10%));
+        }
+        &.btn-danger {
+            @include button(theme(color-inverse), theme(danger-color), lighten(theme(danger-color),10%));
+        }
+        &.btn-warning {
+            @include button(theme(color-inverse), theme(warning-color), lighten(theme(warning-color),10%));
+        }
+        &.btn-cancel {
+            @include button(theme(color-inverse), theme(cancel-color), lighten(theme(cancel-color),10%));
+        }
+    }
+
+
+}
